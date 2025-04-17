@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useContext, useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
-import { getDriverBids } from "../../server_actions/getDriverBids";
+import { getMechanicBids } from "../../server_actions/getMechanicBids";
 
 import Wrap from "../../shared/ui/Wrap";
 import Button from "../../shared/ui/Button";
@@ -10,7 +10,7 @@ import BidCard from "./BidCard";
 import { ModalContext } from "../modals/ModalHandlerWrap";
 
 const BidsBlock = () => {
-  const { bidModal, setBidModal } = useContext(ModalContext);
+  const { setHistoryModal, historyModal } = useContext(ModalContext);
 
   const dotVariants = {
     pulse: {
@@ -28,7 +28,9 @@ const BidsBlock = () => {
 
   const handleFetch = async () => {
     startTransition(async () => {
-      const res = await getDriverBids();
+      const res = await getMechanicBids();
+
+      console.log(res);
 
       if (res?.error) {
         toast.error(res?.error);
@@ -40,11 +42,11 @@ const BidsBlock = () => {
   };
 
   useEffect(() => {
-    if (!bidModal)
+    if (!historyModal)
       (async () => {
         await handleFetch();
       })();
-  }, [bidModal]);
+  }, [historyModal]);
 
   return (
     <div className="flex flex-col gap-[12px]">
@@ -74,23 +76,11 @@ const BidsBlock = () => {
           <p className="text-[16px] font-medium text-center select-none truncate leading-[18px] text-[#2c2c2c]">
             У вас нет активных заявок
           </p>
-
-          <Button
-            text="Создать"
-            style="max-w-[300px] w-full mx-auto"
-            onClick={() => setBidModal(true)}
-          />
         </Wrap>
       ) : (
         <>
-          <Button
-            text="Создать заявку"
-            style="max-w-[300px] w-full mx-auto"
-            onClick={() => setBidModal(true)}
-          />
-
           {bids?.map((i) => (
-            <BidCard key={i?.id} item={i} />
+            <BidCard key={i?.id} item={i} setHistoryModal={setHistoryModal} />
           ))}
         </>
       )}

@@ -6,7 +6,7 @@ import { useUserStore } from "../storage/zustand";
 import { checkAuth } from "../server_actions/checkAuth";
 
 const ProtectedRoute = ({ children }) => {
-  const { setUser } = useUserStore();
+  const { user, setUser } = useUserStore();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -34,13 +34,18 @@ const ProtectedRoute = ({ children }) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated === false) navigate("/login");
+    if (
+      isAuthenticated === false &&
+      !pathname?.includes("/login") &&
+      !pathname?.includes("/register")
+    )
+      navigate("/login");
 
     if (
       isAuthenticated === true &&
       (pathname?.includes("/login") || pathname?.includes("/register"))
     )
-      navigate("/");
+      navigate(`/${user?.role}`);
   }, [isAuthenticated, pathname]);
 
   if (isAuthenticated === null) {

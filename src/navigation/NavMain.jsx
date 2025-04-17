@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
 import DriversPage from "../pages/driver/DriversPage";
+import MecanicPage from "../pages/mecanic/MecanicPage";
 
 const NavMain = () => {
   return (
@@ -17,6 +18,10 @@ const NavMain = () => {
       {/* driver */}
       <Route path="/driver" element={<DriversPage />} />
       {/* driver */}
+
+      {/* mecanic */}
+      <Route path="/mecanic" element={<MecanicPage />} />
+      {/* mecanic */}
 
       <Route path="*" element={<h1>error</h1>} />
     </Routes>

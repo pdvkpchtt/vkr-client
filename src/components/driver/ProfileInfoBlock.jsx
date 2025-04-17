@@ -1,19 +1,26 @@
 import Wrap from "../../shared/ui/Wrap";
 import { useUserStore } from "../../storage/zustand";
 
-import LogoutIcon from "../../shared/icons/LogoutIcon";
-
 import { logout } from "../../server_actions/logout";
+
+import LogoutIcon from "../../shared/icons/LogoutIcon";
+import MechanicIcon from "../../shared/icons/MechanicIcon";
+import DriverIcon from "../../shared/icons/DriverIcon";
 
 const ProfileInfoBlock = () => {
   const { user } = useUserStore();
+
   return (
     <Wrap>
       {/* name */}
       <div className="flex flex-row gap-[12px] overflow-hidden items-center justify-between">
-        <p className="text-[24px] truncate text-[#2c2c2c] font-bold">
-          {user?.name}
-        </p>
+        <div className="flex flex-row items-center gap-[8px]">
+          <p className="text-[24px] truncate text-[#2c2c2c] font-bold">
+            {user?.name}
+          </p>
+
+          {user?.role === "mecanic" ? <MechanicIcon /> : <DriverIcon />}
+        </div>
 
         <LogoutIcon onClick={async () => await logout()} />
       </div>
