@@ -64,7 +64,7 @@ const HistoryBlock = () => {
             />
           </motion.div>
         </div>
-      ) : history?.length === 0 ? (
+      ) : history?.length === 0 || history?.detail ? (
         <Wrap>
           <p className="text-[16px] font-medium text-center select-none truncate leading-[18px] text-[#2c2c2c]">
             У вас нет истории

@@ -15,6 +15,8 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const validateAuth = async () => {
       const user = await checkAuth();
+
+      console.log(user);
       setUser(user);
       setIsAuthenticated(!!user);
     };

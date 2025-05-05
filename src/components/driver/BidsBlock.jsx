@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useContext, useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import { LayoutGroup } from "framer-motion";
 
 import { getDriverBids } from "../../server_actions/getDriverBids";
 
@@ -10,6 +11,8 @@ import BidCard from "./BidCard";
 import { ModalContext } from "../modals/ModalHandlerWrap";
 
 const BidsBlock = () => {
+  const [selectedId, setSelectedId] = useState(null);
+
   const { bidModal, setBidModal } = useContext(ModalContext);
 
   const dotVariants = {
@@ -89,9 +92,16 @@ const BidsBlock = () => {
             onClick={() => setBidModal(true)}
           />
 
-          {bids?.map((i) => (
-            <BidCard key={i?.id} item={i} />
-          ))}
+          <LayoutGroup>
+            {bids?.map((i) => (
+              <BidCard
+                key={i?.id}
+                item={i}
+                setSelectedId={setSelectedId}
+                selectedId={selectedId}
+              />
+            ))}
+          </LayoutGroup>
         </>
       )}
     </div>
