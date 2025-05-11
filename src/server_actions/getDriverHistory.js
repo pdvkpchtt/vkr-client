@@ -1,6 +1,6 @@
 export const getDriverHistory = async () => {
   try {
-    const res = await fetch(`http://localhost:8000/driver/get_history`, {
+    const res = await fetch(`http://localhost:8000/driver/get_history_auto`, {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",

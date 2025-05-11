@@ -1,16 +1,16 @@
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { useContext, useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 import { getMechanicBids } from "../../server_actions/getMechanicBids";
 
 import Wrap from "../../shared/ui/Wrap";
-import Button from "../../shared/ui/Button";
 import BidCard from "./BidCard";
 import { ModalContext } from "../modals/ModalHandlerWrap";
 
 const BidsBlock = () => {
   const { setHistoryModal, historyModal } = useContext(ModalContext);
+  const [selectedId, setSelectedId] = useState(null);
 
   const dotVariants = {
     pulse: {
@@ -78,11 +78,17 @@ const BidsBlock = () => {
           </p>
         </Wrap>
       ) : (
-        <>
+        <LayoutGroup>
           {bids?.map((i) => (
-            <BidCard key={i?.id} item={i} setHistoryModal={setHistoryModal} />
+            <BidCard
+              key={i?.id}
+              item={i}
+              setHistoryModal={setHistoryModal}
+              setSelectedId={setSelectedId}
+              selectedId={selectedId}
+            />
           ))}
-        </>
+        </LayoutGroup>
       )}
     </div>
   );

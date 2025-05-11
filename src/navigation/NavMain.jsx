@@ -20,7 +20,7 @@ const NavMain = () => {
       {/* driver */}
 
       {/* mecanic */}
-      <Route path="/mecanic" element={<MecanicPage />} />
+      <Route path="/mechanic" element={<MecanicPage />} />
       {/* mecanic */}
 
       <Route path="*" element={<h1>error</h1>} />

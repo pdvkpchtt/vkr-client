@@ -5,4 +5,6 @@ export const HistorySchema = z.object({
   description: z
     .string()
     .min(1, { message: "Поле обязательно для заполнения" }),
+  work_hours: z.string().min(1, { message: "Поле обязательно для заполнения" }),
+  spares: z.string().min(1, { message: "Поле обязательно для заполнения" }),
 });

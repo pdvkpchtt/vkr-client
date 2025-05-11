@@ -21,12 +21,8 @@ const BidCardModal = ({
   item = {},
   setClose = () => {},
   selectedId = null,
+  mechanic = false,
 }) => {
-  useEffect(() => {
-    if (selectedId) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
-  }, [selectedId]);
-
   const dotVariants = {
     pulse: {
       scale: [1, 1.5, 1],
@@ -43,7 +39,7 @@ const BidCardModal = ({
 
   const handleFetch = async () => {
     startTransition(async () => {
-      const res = await getBidInfoDriver(item?.id);
+      const res = await getBidInfoDriver(item?.id, mechanic);
 
       console.log(res);
 
@@ -117,44 +113,124 @@ const BidCardModal = ({
               </motion.div>
             ) : (
               <>
-                <div className="flex flex-col gap-[4px] w-full overflow-hidden">
-                  <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
-                    Механик
-                  </p>
-                  <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
-                    {data?.info_mechanic?.name}
-                  </p>
-                </div>
+                {mechanic ? (
+                  <>
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Авто
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.mark} {data?.car?.model}, {data?.car?.year}{" "}
+                        г. — {data?.car?.gos_nomer}
+                      </p>
+                    </div>
 
-                <div className="flex flex-col gap-[4px] w-full overflow-hidden">
-                  <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
-                    Контактный номер
-                  </p>
-                  <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
-                    {data?.info_mechanic?.phone}
-                  </p>
-                </div>
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Валделец
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.driver?.name} —{" "}
+                        {dayjs(data?.driver?.bithday).format("DD-MM-YYYY")}
+                      </p>
+                    </div>
 
-                <div className="flex flex-col gap-[4px] w-full overflow-hidden">
-                  <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
-                    Почта механика
-                  </p>
-                  <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
-                    {data?.info_mechanic?.email}
-                  </p>
-                </div>
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Контакты владельца
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.driver?.email}, {data?.driver?.phone}
+                      </p>
+                    </div>
 
-                {data?.info_mechanic?.birthday && (
-                  <div className="flex flex-col gap-[4px] w-full overflow-hidden">
-                    <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
-                      Дата рождения механика
-                    </p>
-                    <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
-                      {dayjs(data?.info_mechanic?.birthday).format(
-                        "DD-MM-YYYY"
-                      )}
-                    </p>
-                  </div>
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        КПП
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.type_kpp}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        VIN
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.vin}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Двигатель
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.v_dvig} л. — {data?.car?.power} л.с.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Расход
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.rasxod} л.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Грузоподъемность
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.car?.gruzopod} кг.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Механик
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.info_mechanic?.name}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Контактный номер
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.info_mechanic?.phone}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                      <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                        Почта механика
+                      </p>
+                      <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                        {data?.info_mechanic?.email}
+                      </p>
+                    </div>
+
+                    {data?.info_mechanic?.birthday && (
+                      <div className="flex flex-col gap-[4px] w-full overflow-hidden">
+                        <p className="text-[14px] font-medium select-none truncate leading-[14px] text-[#8f8f8f]">
+                          Дата рождения механика
+                        </p>
+                        <p className="text-[16px] font-semibold select-none truncate leading-[18px] text-[#2c2c2c]">
+                          {dayjs(data?.info_mechanic?.birthday).format(
+                            "DD-MM-YYYY"
+                          )}
+                        </p>
+                      </div>
+                    )}
+                  </>
                 )}
               </>
             )}

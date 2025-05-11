@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
@@ -19,6 +19,7 @@ const HistoryBlock = () => {
   };
 
   const [isPending, startTransition] = useTransition();
+  const [selectedId, setSelectedId] = useState(null);
   const [history, setHistory] = useState(null);
 
   const handleFetch = async () => {
@@ -73,7 +74,13 @@ const HistoryBlock = () => {
       ) : (
         <>
           {history.map((i) => (
-            <BidCard key={i?.id} item={i} />
+            <BidCard
+              no
+              key={i?.id}
+              item={i}
+              setSelectedId={setSelectedId}
+              selectedId={selectedId}
+            />
           ))}
         </>
       )}

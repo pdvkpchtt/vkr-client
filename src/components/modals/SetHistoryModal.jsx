@@ -13,7 +13,12 @@ import CrossIcon from "../../shared/icons/CrossIcon";
 const SetHistoryModal = ({ setModal = () => {}, bidId = null }) => {
   const ref = useRef();
   const [isPending, startTransition] = useTransition();
-  const [formData, setFormData] = useState({ description: "", run: "" });
+  const [formData, setFormData] = useState({
+    description: "",
+    run: "",
+    work_hours: "",
+    spares: "",
+  });
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -72,6 +77,24 @@ const SetHistoryModal = ({ setModal = () => {}, bidId = null }) => {
         onChange={(run) => setFormData({ ...formData, run })}
         onEnterPress={handleSubmit}
         error={error?.run && error?.run[0]}
+      />
+      <Input
+        disabled={isPending}
+        placeholder={`Затрачено времени`}
+        label="Время на работу"
+        value={formData.work_hours}
+        onChange={(work_hours) => setFormData({ ...formData, work_hours })}
+        onEnterPress={handleSubmit}
+        error={error?.work_hours && error?.work_hours[0]}
+      />
+      <Input
+        disabled={isPending}
+        placeholder={`Использованные запчасти`}
+        label="Запчасти"
+        value={formData.spares}
+        onChange={(spares) => setFormData({ ...formData, spares })}
+        onEnterPress={handleSubmit}
+        error={error?.spares && error?.spares[0]}
       />
 
       <Button

@@ -11,6 +11,7 @@ var updateLocale = require("dayjs/plugin/updateLocale");
 dayjs.extend(updateLocale);
 
 const BidCard = ({
+  no = false,
   item = {},
   selectedId = null,
   setSelectedId = () => {},
@@ -19,10 +20,12 @@ const BidCard = ({
     <LayoutGroup id={selectedId}>
       <motion.div
         layoutId={item.id}
-        className={`rounded-[20px] cursor-pointer p-[12px] bg-[#fff] w-full flex flex-col gap-[12px] ${
+        className={`rounded-[20px] ${
+          !no && "cursor-pointer"
+        } p-[12px] bg-[#fff] w-full flex flex-col gap-[12px] ${
           selectedId == item.id && "hidden z-40"
         }`}
-        onClick={() => setSelectedId(item.id)}
+        onClick={() => !no && setSelectedId(item.id)}
       >
         <div className="w-full flex flex-row gap-[12px] justify-between items-center">
           <p

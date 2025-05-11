@@ -1,7 +1,9 @@
-export const getBidInfoDriver = async (bid_id) => {
+export const getBidInfoDriver = async (bid_id, mechanic = false) => {
   try {
     const res = await fetch(
-      `http://localhost:8000/driver/get_info_bids_of_mechanic?bid_id=${bid_id}`,
+      mechanic
+        ? `http://localhost:8000/mechanic/bids/${bid_id}`
+        : `http://localhost:8000/driver/get_info_bids_of_mechanic?bid_id=${bid_id}`,
       {
         // method: "POST",
         credentials: "include",

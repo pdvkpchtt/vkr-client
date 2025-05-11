@@ -1,9 +1,9 @@
 export const createHistory = async (formData = {}) => {
-  const { bid_id, run, description } = formData;
+  const { bid_id, run, description, work_hours, spares } = formData;
 
   try {
     const res = await fetch(
-      `http://localhost:8000/mechanic/add_history?bid_id=${bid_id}&run=${run}&description=${description}`,
+      `http://localhost:8000/mechanic/add_history?bid_id=${bid_id}&run=${run}&description=${description}&work_hours=${work_hours}&spares=${spares}`,
       {
         method: "POST",
         credentials: "include",
