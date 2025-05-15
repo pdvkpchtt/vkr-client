@@ -27,13 +27,15 @@ const BidCard = ({
         layoutId={item.id}
         className={`rounded-[20px] ${
           item?.state === "procces" ? "" : "cursor-pointer"
-        } p-[12px] bg-[#fff] w-full flex flex-col gap-[12px] ${
+        } p-[12px] bg-[#fff] w-full flex relative flex-col gap-[12px] ${
           selectedId == item.id && "hidden z-40"
         }`}
-        onClick={() =>
-          item?.state === "procces" ? {} : setSelectedId(item.id)
-        }
       >
+        <div
+          className="absolute top-0 left-0 w-full h-full rounded-[20px] cursor-pointer z-[1]"
+          onClick={() => setSelectedId(item.id)}
+        />
+
         <div className="w-full flex flex-row gap-[12px] cursor-pointer justify-between items-center">
           <p
             className={`text-[16px] leading-[16px] font-medium select-none ${
@@ -53,7 +55,11 @@ const BidCard = ({
         </p>
 
         {item?.state === "procces" && (
-          <Button text="Готово" onClick={() => setHistoryModal(item?.id)} />
+          <Button
+            text="Готово"
+            style="z-[2]"
+            onClick={() => setHistoryModal(item?.id)}
+          />
         )}
       </motion.div>
 
